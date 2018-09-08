@@ -1,0 +1,11 @@
+<% include ./partials/header.ejs %>
+
+<h1> Welcome to Log In page !</h1>
+
+<form method="POST" action="/login">
+    <input type="text" name="username" placeholder="username"> 
+    <input type="password" name="password" placeholder="password"> 
+    <button>Log In!</button>
+</form>
+
+<% include ./partials/footer.ejs %>
