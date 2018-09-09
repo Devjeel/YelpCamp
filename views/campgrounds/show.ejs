@@ -8,6 +8,7 @@
                 <li class="list-group-item">Info 2</li>
                 <li class="list-group-item">Info 3</li>
             </div>
+            <div id='map'></div>
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
@@ -44,13 +45,13 @@
                                 <%= comment.text %>
                             </p>
                             <!--Only show buttons if user loggedin and owns it -->
-                            <!--if(currentUser && comment.author.id.equals(currentUser._id)){ -->
+                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
                                 <a class="btn btn-warning btn-xs" href="/campgrounds/<%=campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
                                 <!--Delete Form-->
                                 <form  id="delete" action="/campgrounds/<%=campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                                     <input type="submit" value="Delete" class="btn btn-danger btn-xs">
                                 </form>
-                            <!--}-->
+                            <% } %>
                         </div>
                     </div>
                 <% }) %>
@@ -58,5 +59,15 @@
         </div>
     </div>
 </div>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiamVlbHBhdGVsMDIiLCJhIjoiY2psdWVqcTd1MGk5OTNwbzYzbGp2NHN5eSJ9.mry2wQhPwDJ9PgtdTsb-gw';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
+    center: [-74.50, 40], // starting position [lng, lat]
+    zoom: 9 // starting zoom
+});
+</script>
 
 <% include ../partials/footer %> 
