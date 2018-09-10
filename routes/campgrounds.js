@@ -19,16 +19,17 @@ router.get("/", function(req, res){
 
 // CREATE Route
 router.post("/", middleware.isLoggedIn, function(req, res){
-    // get data from form and add to campground
+    
     var name = req.body.name;
     var price = req.body.price;
     var image = req.body.image;
+    var location = req.body.location;
     var desc = req.body.description;
     var author = {
         id: req.user._id,
         username: req.user.username
     };
-    var newCampground = {title: name, price: price, image: image, description: desc, author: author};
+    var newCampground = {title: name, price: price, image: image, description: desc, author: author, location: location};
     
     // create a new campground and save to db
     Campground.create(newCampground, function(err, newlyCreated){
@@ -41,7 +42,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
             res.redirect("/campgrounds");
         }
     });
-});
+  });
 
 // NEW Route
 router.get("/new", middleware.isLoggedIn, function(req, res) {
@@ -92,7 +93,8 @@ router.delete("/:id", middleware.checkCampgroundOwnerShip, function(req, res){
             req.flash("success", "Campground successfully removed")
             res.redirect("/campgrounds");
         }
-    });
-});
+    })
+})
+
 
 module.exports = router;

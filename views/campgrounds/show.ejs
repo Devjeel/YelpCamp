@@ -62,12 +62,26 @@
 
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiamVlbHBhdGVsMDIiLCJhIjoiY2psdWVqcTd1MGk5OTNwbzYzbGp2NHN5eSJ9.mry2wQhPwDJ9PgtdTsb-gw';
+// var client = new MapboxClient(mapboxgl.accessToken);
 var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
     center: [-74.50, 40], // starting position [lng, lat]
     zoom: 9 // starting zoom
 });
+
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
+
+        // var geocoder = new MapboxGeocoder({ accessToken: mapboxgl.accessToken });
+        // map.addControl(geocoder);
+        
+        // client.geocodeForward(location, function(err, data, res) {
+        //   // data is the geocoding result as parsed JSON
+        //   // res is the http response, including: status, headers and entity properties
+        //   console.log(data);
+        // });
+
 </script>
 
 <% include ../partials/footer %> 

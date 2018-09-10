@@ -22,3 +22,34 @@
     height: 400px;
     width: 100%;
 }
+
+footer{
+    background-color: #d9dddd;
+}
+
+h2{
+    font-weight: lighter;
+    text-align: center;
+    color: #000;
+    padding-top: 30px;
+    margin-bottom: 0;
+}
+
+footer ul li{
+    list-style: none;
+    margin: 10px 30px;
+    display: inline-block;
+    font-size: 30px;
+    padding: 10px 17px;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 100%;
+    transition: 0.5s;
+}
+
+footer ul li:hover{
+    color: #737774;
+    border:1px solid #737774;
+    transition: .5s;
+    transform: scale(1.2);
+}
