@@ -7,14 +7,29 @@ var middleware = require("../middleware");
 
 // INDEX Route
 router.get("/", function(req, res){
-    // get data from db
-    Campground.find({}, function(err, allcampgrounds){
-        if(err){
-            console.log(err);
-        }else{
-            res.render("campgrounds/index" , {campgrounds: allcampgrounds});   
-        }
-    });
+    var noMatch;
+    if(req.query.search){
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        Campground.find({title : regex}, function(err, allcampgrounds){
+            if(err){
+                console.log(err);
+            }else{
+                if(allcampgrounds.length < 1){
+                    noMatch="No Campground Found, Please Search Harder :)";
+                }
+                res.render("campgrounds/index" , {campgrounds: allcampgrounds, noMatch:noMatch});   
+            }
+        });
+    } else {
+        // get data from db
+        Campground.find({}, function(err, allcampgrounds){
+            if(err){
+                console.log(err);
+            }else{
+                res.render("campgrounds/index" , {campgrounds: allcampgrounds, noMatch:noMatch});   
+            }
+        });
+    }
 });
 
 // CREATE Route
@@ -70,7 +85,7 @@ router.get("/:id/edit", middleware.checkCampgroundOwnerShip, function(req, res) 
             res.render("campgrounds/edit", {campground: findcampground});
         }
     });
-})
+});
 
 // UPDATE Route
 router.put("/:id", middleware.checkCampgroundOwnerShip, function(req, res){
@@ -90,11 +105,14 @@ router.delete("/:id", middleware.checkCampgroundOwnerShip, function(req, res){
         if(err){
             res.redirect("/campgrounds");
         } else {
-            req.flash("success", "Campground successfully removed")
+            req.flash("success", "Campground successfully removed");
             res.redirect("/campgrounds");
         }
-    })
-})
+    });
+});
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 module.exports = router;
